@@ -1,0 +1,22 @@
+---
+
+- name: Install docker
+  yum: name=docker state=latest
+
+- name: Enable docker service
+  service: name=docker state=started enabled=yes
+
+- name: Allow ec2-user to use Docker
+  command: usermod -a -G docker ec2-user
+
+- name: Login to ECR
+  shell: eval "$(aws ecr get-login --region eu-west-1)"
+
+# TODO ansibleize these
+- name: Pull images
+  command: docker pull {{ ecr_repo_base}}/{{ item }}
+  with_items:
+    - sixodp-solr:latest
+
+- name: Start containers
+  command: "docker run -d -p 8983:8983 --restart=always {{ ecr_repo_base}}/sixodp-solr:latest"
