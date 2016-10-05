@@ -6,7 +6,7 @@ pip install ansible
 
 cd /root
 git clone https://github.com/6aika/sixodp-infra.git
-cd /root/sixodp-infra
+cd /root/sixodp-infra/bootstrap
 
 # TODO
 # aws s3 cp secrets...
