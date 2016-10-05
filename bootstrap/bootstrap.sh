@@ -1,7 +1,8 @@
 #!/bin/bash
 
 yum update -y
-yum install -y ansible git
+yum install -y git
+pip install ansible
 
 cd /root
 git clone https://github.com/6aika/sixodp-infra.git
