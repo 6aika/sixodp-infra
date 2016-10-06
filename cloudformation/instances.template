@@ -50,8 +50,20 @@ Resources:
             DeleteOnTermination: true
       UserData:
         !Base64 |
-          #!/bin/bash -xe
-          wget -O - https://s3-eu-west-1.amazonaws.com/sixodp-infra/bootstrap/bootstrap.sh | bash
+          #!/bin/bash
+          PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/opt/aws/bin:/root/bin
+
+          yum update -y > /root/deploy.log
+          yum install -y git >> /root/deploy.log
+          pip install ansible >> /root/deploy.log
+
+          cd /root
+          git clone https://github.com/6aika/sixodp-infra.git >> /root/deploy.log
+
+          cd /root/sixodp-infra/bootstrap
+          ansible-playbook -i localhost, deploy.yml >> /root/deploy.log
+
+          echo "Bootstrap done." >> /root/deploy.log
 
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
