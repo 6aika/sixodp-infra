@@ -1,0 +1,10 @@
+---
+
+- name: Install nginx
+  yum: pkg=nginx state=latest
+
+- name: Copy nginx configuration
+  template: src=nginx.conf dest=/etc/nginx/nginx.conf mode="0644" owner=root group=root
+
+- name: Restart nginx
+  service: name=nginx state=restarted enabled=yes

@@ -6,4 +6,4 @@
   roles:
     - ssh
     - docker
-    # - todo nginx
+    - nginx
