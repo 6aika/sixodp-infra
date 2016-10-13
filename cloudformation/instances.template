@@ -55,7 +55,7 @@ Resources:
 
           yum update -y > /root/deploy.log
           yum install -y git >> /root/deploy.log
-          pip install ansible >> /root/deploy.log
+          pip install ansible docker-py==1.9.0 >> /root/deploy.log
 
           cd /root
           git clone https://github.com/6aika/sixodp-infra.git >> /root/deploy.log
