@@ -6,17 +6,16 @@
 - name: Enable docker service
   service: name=docker state=started enabled=yes
 
-- name: Allow ec2-user to use Docker
+- name: Allow ec2-user to use docker
   command: usermod -a -G docker ec2-user
 
-- name: Login to ECR
+- name: Login to container registry
   shell: eval "$(aws ecr get-login --region eu-west-1)"
 
-# TODO ansibleize these
-- name: Pull images
-  command: docker pull {{ ecr_repo_base}}/{{ item }}
-  with_items:
-    - sixodp-solr:latest
-
-- name: Start containers
-  command: "docker run -d -p 8983:8983 --restart=always {{ ecr_repo_base}}/sixodp-solr:latest"
+- name: Pull and start containers
+  docker_container:
+    name: "{{ item.value.name }}"
+    image: "{{ ecr_repo_base}}/{{ item.value.name }}:{{ item.value.tag }}"
+    ports: "{{ item.value.ports }}"
+    pull: yes
+  with_dict: "{{ containers }}"
