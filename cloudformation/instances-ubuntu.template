@@ -66,8 +66,8 @@ Resources:
 
           apt-get update > /root/deploy.log
           apt-get -y dist-upgrade >> /root/deploy.log
-          apt-get -y install git >> /root/deploy.log
-          pip install ansible docker-py==1.9.0 >> /root/deploy.log
+          apt-get -y install python-dev python-pip git >> /root/deploy.log
+          pip install ansible markupsafe docker-py==1.9.0 >> /root/deploy.log
 
           cd /root
           git clone https://github.com/6aika/sixodp-infra.git >> /root/deploy.log
