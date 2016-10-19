@@ -4,15 +4,14 @@
   yum: name=docker state=latest
   when: ansible_os_family == 'RedHat'
 
-- name: Install docker
-  apt: name=docker state=latest
-  when: ansible_os_family == 'Debian'
+- include: install_ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Enable docker service
   service: name=docker state=started enabled=yes
 
 - name: Allow ec2-user to use docker
-  command: usermod -a -G docker ec2-user
+  command: usermod -a -G docker {{ sudo_user }}
 
 - name: Login to container registry
   shell: eval "$(aws ecr get-login --region eu-west-1)"

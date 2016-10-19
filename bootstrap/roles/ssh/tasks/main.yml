@@ -2,7 +2,7 @@
 
 - name: Authorize SSH keys
   authorized_key:
-    user={{ ssh_admin_user }}
+    user={{ sudo_user }}
     key="{{ item }}"
     state=present
   with_items: "{{ ssh_keys }}"
