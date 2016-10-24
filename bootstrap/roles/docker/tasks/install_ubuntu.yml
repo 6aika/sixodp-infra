@@ -12,9 +12,9 @@
   apt_key: keyserver=p80.pool.sks-keyservers.net id=58118E89F3A912897C070ADBF76221572C52609D
 
 - name: Add docker repository
-  apt_repository: repo="deb https://apt.dockerproject.org/repo ubuntu-xenial main" state=present
+  apt_repository: repo="deb https://apt.dockerproject.org/repo ubuntu-trusty main" state=present
 
-- name: Install prerequisites
+- name: Install docker
   apt: name={{ item }} state=latest
   with_items:
     - docker-engine
