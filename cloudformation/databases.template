@@ -2,9 +2,29 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: sixodp databases
 
 Parameters:
+  CustomerName:
+    Type: String
+    Default: generic
+  EnvironmentName:
+    Type: String
+    Default: infratest
+    AllowedValues:
+      - infratest
+      - dev
+      - qa
+      - prod
   DatabaseSubnets:
     Description: Database subnets
     Type: List<AWS::EC2::Subnet::Id>
+  AdminUsername:
+    Description: Database admin username
+    Type: String
+    MinLength: 1
+    Default: ckan_admin
+  AdminPassword:
+    Description: Database admin password
+    Type: String
+    MinLength: 8
 
 Resources:
   RDSInstance:
@@ -17,8 +37,8 @@ Resources:
       MultiAZ: false
       StorageType: gp2
       DBInstanceIdentifier: sixodp-generic-dev-ckanmaster
-      MasterUsername: sixodpadmin
-      MasterUserPassword: footestpassword
+      MasterUsername: !Ref AdminUsername
+      MasterUserPassword: !Ref AdminPassword
       DBSubnetGroupName: !Ref DatabaseSubnetGroup
       VPCSecurityGroups:
         - !GetAtt DatabaseSecurityGroup.GroupId
@@ -31,7 +51,7 @@ Resources:
   DatabaseSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
     Properties:
-      DBSubnetGroupDescription: "Subnets for databases"
+      DBSubnetGroupDescription: Subnets for databases
       SubnetIds: !Ref DatabaseSubnets
 
 Outputs:
