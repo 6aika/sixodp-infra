@@ -7,4 +7,4 @@ containers:
     name: sixodp-solr
     tag: latest
     ports:
-      - "8983:8983"
+      - "18983:18983"
