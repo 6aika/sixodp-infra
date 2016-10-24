@@ -64,24 +64,24 @@ Resources:
         !Base64 |
           #!/bin/bash
 
-          apt-get update > /root/deploy.log
-          apt-get -y dist-upgrade >> /root/deploy.log
-          apt-get -y install libssl-dev libffi-dev python-dev python-pip git >> /root/deploy.log
-          pip install awscli ansible markupsafe docker-py==1.9.0 >> /root/deploy.log
+          apt-get update
+          apt-get -y dist-upgrade
+          apt-get -y install libssl-dev libffi-dev python-dev python-pip git
+          pip install awscli ansible markupsafe docker-py==1.9.0
 
           cd /root
-          git clone https://github.com/6aika/sixodp-infra.git >> /root/deploy.log
-          git clone https://github.com/6aika/sixodp.git >> /root/deploy.log
+          git clone https://github.com/6aika/sixodp-infra.git
+          git clone https://github.com/6aika/sixodp.git
 
           cd /root/sixodp-infra/bootstrap
-          ansible-playbook -i localhost, deploy.yml >> /root/deploy.log
+          ansible-playbook -i localhost, deploy.yml
 
           cd /root/sixodp
           git submodule update --init --recursive
           cd /root/sixodp/ansible
-          ansible-playbook -i inventories/qa deploy-transitional.yml >> /root/deploy.log
+          ansible-playbook -i inventories/qa deploy-transitional.yml
 
-          echo "Bootstrap done." >> /root/deploy.log
+          echo "Bootstrap done."
 
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
