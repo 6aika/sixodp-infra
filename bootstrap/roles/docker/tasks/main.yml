@@ -7,6 +7,12 @@
 - include: install_ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
 
+- name: Install docker compose
+  pip: name={{ item }} state=latest
+  with_items:
+    - pip
+    - docker-compose
+
 - name: Enable docker service
   service: name=docker state=started enabled=yes
 
