@@ -7,4 +7,4 @@
     - "vars/common.yml"
   roles:
     - ssh
-    - docker
+    #- docker
