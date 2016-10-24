@@ -7,11 +7,11 @@ Parameters:
     Default: generic
   EnvironmentName:
     Type: String
-    Default: dev
+    Default: infratest
     AllowedValues:
+      - infratest
       - dev
       - qa
-      - test
       - prod
   InstanceType:
     Description: EC2 instance type for the application servers
