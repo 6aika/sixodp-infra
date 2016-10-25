@@ -78,6 +78,10 @@ Resources:
 
           cd /root/sixodp
           git submodule update --init --recursive
+
+          aws s3 cp s3://sixodp-secrets/generic/qa/secrets.yml /root/sixodp/ansible/vars/sixodp-secrets/generic/qa/secrets.yml
+          chmod -R go-rwx /root/sixodp/ansible/vars/sixodp-secrets/*
+
           cd /root/sixodp/ansible
           ansible-playbook -i inventories/qa deploy-transitional.yml
 
