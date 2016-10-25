@@ -60,6 +60,9 @@ Resources:
             VolumeType: gp2
             VolumeSize: 20
             DeleteOnTermination: true
+      Tags:
+        - Key: Name
+          Value: !Sub sixodp-${CustomerName}-${EnvironmentName}
       UserData:
         !Base64 |
           #!/bin/bash
