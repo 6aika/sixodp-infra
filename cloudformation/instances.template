@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Sixodp application infrastructure
+Description: sixodp application infrastructure
 
 Parameters:
   EnvironmentName:
@@ -23,14 +23,6 @@ Parameters:
     Description: Security group of the RDS database
     Type: AWS::EC2::SecurityGroup::Id
     MinLength: 1
-  InstanceRole:
-    Description: Instance Role of the EC2 instance
-    Type: String
-    MinLength: 1
-    AllowedValues:
-      - sixodp-generic-qa-instance 
-      - sixodp-docker-instance-role
-      - sixodp-omni-instance
   HostedZoneId:
     Description: Zone ID for the DNS record
     Type: AWS::Route53::HostedZone::Id
@@ -48,7 +40,7 @@ Resources:
       InstanceType: !Ref InstanceType
       ImageId: ami-0d77397e # Ubuntu Server 16.04 LTS (HVM), SSD Volume Type
       KeyName: sixodp-omni
-      IamInstanceProfile: !Ref InstanceRole
+      IamInstanceProfile: !Ref InstanceProfile
       SecurityGroups:
         - !Ref InstanceSecurityGroup
       BlockDeviceMappings: 
@@ -133,6 +125,36 @@ Resources:
       HostedZoneId: !Ref HostedZoneId
       ResourceRecords:
         - !Ref ElasticAddress
+
+  InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: sts:AssumeRole
+            Principal:
+              Service: ec2.amazonaws.com
+      Policies:
+        - PolicyName: Instance policies
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: s3:GetObject
+                Resource: !Sub "arn:aws:s3:::sixodp-secrets/${EnvironmentName}/*"
+              - Effect: Allow
+                Action: "*"
+                Resource:
+                  - !Sub "arn:aws:s3:::sixodp-${EnvironmentName}-datasets"
+                  - !Sub "arn:aws:s3:::sixodp-${EnvironmentName}-datasets/*"
+
+  InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref InstanceRole
 
 Outputs:
   InstanceId:
