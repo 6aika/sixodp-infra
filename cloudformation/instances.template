@@ -92,11 +92,11 @@ Resources:
         - FromPort: 80
           ToPort: 80
           IpProtocol: tcp
-          CidrIp: !Ref WhitelistedIpAddress
+          CidrIp: 0.0.0.0/0
         - FromPort: 443
           ToPort: 443
           IpProtocol: tcp
-          CidrIp: !Ref WhitelistedIpAddress
+          CidrIp: 0.0.0.0/0
         - FromPort: 8983
           ToPort: 8983
           IpProtocol: tcp
