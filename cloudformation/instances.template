@@ -111,6 +111,15 @@ Resources:
       GroupId: !Ref DatabaseSecurityGroup
       SourceSecurityGroupName: !Ref InstanceSecurityGroup
 
+  MySQLDatabaseIngressRule:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      IpProtocol: tcp
+      FromPort: 3306
+      ToPort: 3306
+      GroupId: !Ref DatabaseSecurityGroup
+      SourceSecurityGroupName: !Ref InstanceSecurityGroup
+
   ElasticAddress:
     Type: AWS::EC2::EIP
     Properties:
