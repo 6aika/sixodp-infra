@@ -11,7 +11,7 @@ Parameters:
       - generic-qa
       - generic-prod
   DatabaseSubnets:
-    Description: Database subnets
+    Description: Database and EFS mount target subnets
     Type: List<AWS::EC2::Subnet::Id>
   AdminUsername:
     Description: Database admin username
@@ -85,6 +85,38 @@ Resources:
             Effect: Allow
             Resource: !Sub "arn:aws:s3:::${DatasetBucket}/*"
             Principal: "*"
+
+  EFSFileSystem:
+    Type: AWS::EFS::FileSystem
+
+  EFSMountTarget1:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref EFSFileSystem
+      SecurityGroups:
+        - !GetAtt EFSSecurityGroup.GroupId
+      SubnetId: !Select [0, !Ref DatabaseSubnets]
+
+  EFSMountTarget2:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref EFSFileSystem
+      SecurityGroups:
+        - !GetAtt EFSSecurityGroup.GroupId
+      SubnetId: !Select [1, !Ref DatabaseSubnets]
+
+  EFSMountTarget3:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref EFSFileSystem
+      SecurityGroups:
+        - !GetAtt EFSSecurityGroup.GroupId
+      SubnetId: !Select [2, !Ref DatabaseSubnets]
+
+  EFSSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable EFS access
 
 Outputs:
   DatabaseSecurityGroup:
