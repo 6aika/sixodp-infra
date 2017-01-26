@@ -23,6 +23,10 @@ Parameters:
     Description: Security group of the RDS database
     Type: AWS::EC2::SecurityGroup::Id
     MinLength: 1
+  EFSSecurityGroup:
+    Description: Security group of the EFS filesystem
+    Type: AWS::EC2::SecurityGroup::Id
+    MinLength: 1
   HostedZoneId:
     Description: Zone ID for the DNS record
     Type: AWS::Route53::HostedZone::Id
@@ -118,6 +122,15 @@ Resources:
       FromPort: 3306
       ToPort: 3306
       GroupId: !Ref DatabaseSecurityGroup
+      SourceSecurityGroupName: !Ref InstanceSecurityGroup
+
+  EFSIngressRule:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      IpProtocol: tcp
+      FromPort: 2049
+      ToPort: 2049
+      GroupId: !Ref EFSSecurityGroup
       SourceSecurityGroupName: !Ref InstanceSecurityGroup
 
   ElasticAddress:
