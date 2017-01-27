@@ -37,6 +37,11 @@ Parameters:
     Type: String
     Default: 193.64.225.83/32
     MinLength: 1
+  GitBranch:
+    Description: Git branch to checkout
+    Type: String
+    Default: master
+    MinLength: 1
 
 Resources:
   EC2Instance:
@@ -69,7 +74,7 @@ Resources:
 
           cd /root
           git clone https://github.com/6aika/sixodp-infra.git
-          git clone https://github.com/6aika/sixodp.git
+          git clone -b ${GitBranch} https://github.com/6aika/sixodp.git
 
           cd /root/sixodp-infra/bootstrap
           ansible-playbook -i localhost, deploy.yml
