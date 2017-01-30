@@ -66,6 +66,8 @@ Resources:
         "Fn::Sub": |
           #!/bin/bash
 
+          export HOME=/root
+
           apt-get update
           apt-get -y dist-upgrade
           apt-get -y install libssl-dev libffi-dev python-dev python-pip git
