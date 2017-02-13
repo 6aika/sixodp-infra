@@ -11,6 +11,7 @@ Parameters:
       - generic-qa
       - generic-prod
       - turku-qa
+      - tampere-qa
   InstanceType:
     Description: EC2 instance type for the application servers
     Type: String
