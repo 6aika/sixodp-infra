@@ -182,7 +182,7 @@ Resources:
             Principal:
               Service: ec2.amazonaws.com
       Policies:
-        - PolicyName: Instance policies
+        - PolicyName: root
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
