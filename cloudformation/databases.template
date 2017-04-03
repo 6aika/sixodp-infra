@@ -12,6 +12,7 @@ Parameters:
       - generic-prod
       - turku-qa
       - tampere-qa
+      - tampere
   DatabaseSubnets:
     Description: Database and EFS mount target subnets
     Type: List<AWS::EC2::Subnet::Id>
