@@ -60,7 +60,7 @@ Resources:
       SecurityGroups:
         - !Ref InstanceSecurityGroup
       BlockDeviceMappings: 
-        - DeviceName: /dev/xvda
+        - DeviceName: /dev/sda1
           Ebs:
             VolumeType: gp2
             VolumeSize: 20
