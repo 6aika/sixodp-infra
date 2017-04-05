@@ -88,6 +88,7 @@ Resources:
           mkdir -p /var/lib/acme /opt/datacatalog/data/ckan
           mount /var/lib/acme
           mount /opt/datacatalog/data/ckan
+          install -d -o www-data -g www-data /mnt/wp-uploads
 
           cd /root
           git clone https://github.com/6aika/sixodp-infra.git
