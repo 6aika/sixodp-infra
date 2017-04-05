@@ -54,7 +54,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: !Ref InstanceType
-      ImageId: ami-0d77397e # Ubuntu Server 16.04 LTS (HVM), SSD Volume Type
+      ImageId: ami-c0cff0a6 # Ubuntu Server 16.04 LTS (HVM), SSD Volume Type
       KeyName: sixodp-omni
       IamInstanceProfile: !Ref InstanceProfile
       SecurityGroups:
