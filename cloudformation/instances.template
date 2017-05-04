@@ -101,6 +101,7 @@ Resources:
           git submodule update --init --recursive
 
           aws s3 cp s3://sixodp-secrets/${EnvironmentName}/secrets.yml /root/sixodp-secrets/${EnvironmentName}/secrets.yml
+          aws s3 cp s3://sixodp-secrets/${EnvironmentName}/google_analytics_credentials.json /root/sixodp-secrets/${EnvironmentName}/google_analytics_credentials.json
           chmod -R go-rwx /root/sixodp-secrets/*
 
           cd /root/sixodp/ansible
