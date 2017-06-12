@@ -165,7 +165,7 @@ Resources:
       Type: A
       TTL: 300
       HostedZoneId: !Ref HostedZoneId
-      ResourceRecords: [ { "Fn::GetAtt" : [ "EC2instance", "PublicIp" ] } ]
+      ResourceRecords: [ { "Fn::GetAtt" : [ "EC2Instance", "PublicIp" ] } ]
 
   InstanceRole:
     Type: AWS::IAM::Role
