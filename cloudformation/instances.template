@@ -158,11 +158,6 @@ Resources:
       GroupId: !Ref EFSSecurityGroup
       SourceSecurityGroupName: !Ref InstanceSecurityGroup
 
-  ElasticAddress:
-    Type: AWS::EC2::EIP
-    Properties:
-      InstanceId: !Ref EC2Instance
-
   DomainName:
     Type: AWS::Route53::RecordSet
     Properties:
@@ -170,8 +165,7 @@ Resources:
       Type: A
       TTL: 300
       HostedZoneId: !Ref HostedZoneId
-      ResourceRecords:
-        - !Ref ElasticAddress
+      ResourceRecords: [ { "Fn::GetAtt" : [ "EC2instance", "PublicIp" ] } ]
 
   InstanceRole:
     Type: AWS::IAM::Role
