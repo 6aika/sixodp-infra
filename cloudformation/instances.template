@@ -85,7 +85,7 @@ Resources:
           echo '/mnt/var_lib_acme /var/lib/acme none defaults,bind 0 0' >>/etc/fstab
           echo '/mnt/opt_datacatalog_data_ckan /opt/datacatalog/data/ckan none defaults,bind 0 0' >>/etc/fstab
           mount -a -t nfs4
-          mkdir -p /var/lib/acme /opt/datacatalog/data/ckan
+          mkdir -p /var/lib/acme /opt/datacatalog/data/ckan /mnt/var_lib_acme /mnt/opt_datacatalog_data_ckan
           mount /var/lib/acme
           mount /opt/datacatalog/data/ckan
           install -d -o www-data -g www-data /mnt/wp-uploads
