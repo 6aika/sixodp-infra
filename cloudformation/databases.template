@@ -16,17 +16,26 @@ Parameters:
   DatabaseSubnets:
     Description: Database and EFS mount target subnets
     Type: List<AWS::EC2::Subnet::Id>
-  AdminUsername:
-    Description: Database admin username
+  CKANAdminUsername:
+    Description: CKAN database admin username
     Type: String
     MinLength: 1
     Default: ckan_admin
-  AdminPassword:
-    Description: Database admin password
+  CKANAdminPassword:
+    Description: CKAN database admin password
     Type: String
     NoEcho: true
     MinLength: 8
-
+  WPAdminUsername:
+    Description: Wordpress database admin username
+    Type: String
+    MinLength: 1
+    Default: wordpress
+  WPAdminPassword:
+    Description: Wordpress database admin password
+    Type: String
+    NoEcho: true
+    MinLength: 8
 Resources:
   RDSInstance:
     Type: AWS::RDS::DBInstance
@@ -38,8 +47,8 @@ Resources:
       MultiAZ: false
       StorageType: gp2
       DBInstanceIdentifier: !Sub sixodp-${EnvironmentName}-ckan
-      MasterUsername: !Ref AdminUsername
-      MasterUserPassword: !Ref AdminPassword
+      MasterUsername: !Ref CKANAdminUsername
+      MasterUserPassword: !Ref CKANAdminPassword
       DBSubnetGroupName: !Ref DatabaseSubnetGroup
       VPCSecurityGroups:
         - !GetAtt DatabaseSecurityGroup.GroupId
@@ -54,8 +63,8 @@ Resources:
       MultiAZ: false
       StorageType: gp2
       DBInstanceIdentifier: !Sub sixodp-${EnvironmentName}-wordpress
-      MasterUsername: !Ref AdminUsername
-      MasterUserPassword: !Ref AdminPassword
+      MasterUsername: !Ref WPAdminUsername
+      MasterUserPassword: !Ref WPAdminPassword
       DBSubnetGroupName: !Ref DatabaseSubnetGroup
       VPCSecurityGroups:
         - !GetAtt DatabaseSecurityGroup.GroupId
