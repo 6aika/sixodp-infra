@@ -85,6 +85,8 @@ Resources:
     Properties:
       BucketName: !Sub sixodp-${EnvironmentName}-datasets
       AccessControl: PublicRead
+      VersioningConfiguration:
+          Status: Enabled
 
   DatasetBucketPolicy:
     Type: AWS::S3::BucketPolicy
