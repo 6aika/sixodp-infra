@@ -79,7 +79,7 @@ Resources:
           apt-get -y dist-upgrade
           apt-get -y install libssl-dev libffi-dev python-dev python-pip git nfs-common
           pip install pip setuptools --upgrade
-          pip install awscli ansible markupsafe docker-py==1.9.0
+          pip install awscli ansible==2.3.2 markupsafe docker-py==1.9.0
 
           echo '${EFSFileSystem}.efs.${AWS::Region}.amazonaws.com:/ /mnt nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0' >>/etc/fstab
           echo '/mnt/var_lib_acme /var/lib/acme none defaults,bind 0 0' >>/etc/fstab
