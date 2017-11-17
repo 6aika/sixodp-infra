@@ -82,9 +82,9 @@ Resources:
           pip install awscli ansible==2.3.2 markupsafe docker-py==1.9.0
 
           echo '${EFSFileSystem}.efs.${AWS::Region}.amazonaws.com:/ /mnt nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0' >>/etc/fstab
-          echo '/mnt/var_lib_acme /var/lib/acme none defaults,bind 0 0' >>/etc/fstab
-          echo '/mnt/opt_datacatalog_data_ckan /opt/datacatalog/data/ckan none defaults,bind 0 0' >>/etc/fstab
-          mount -a -t nfs4
+          echo '${EFSFileSystem}.efs.${AWS::Region}.amazonaws.com:/mnt/var_lib_acme /var/lib/acme nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0' >>/etc/fstab
+          echo '${EFSFileSystem}.efs.${AWS::Region}.amazonaws.com:/mnt/opt_datacatalog_data_ckan /opt/datacatalog/data/ckan nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0' >>/etc/fstab
+          mount /mnt
           mkdir -p /var/lib/acme /opt/datacatalog/data/ckan /mnt/var_lib_acme /mnt/opt_datacatalog_data_ckan
           mount /var/lib/acme
           mount /opt/datacatalog/data/ckan
