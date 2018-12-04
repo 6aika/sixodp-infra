@@ -48,6 +48,19 @@ Parameters:
     Type: String
     Default: master
     MinLength: 1
+  ClientIp1ForPgAdmin:
+    Description: Optional ip range of client
+    Type: String
+  ClientIp2ForPgAdmin:
+    Description: Optional ip range of client
+    Type: String
+
+Conditions:
+  ClientIp1Given:
+    !Not [!Equals [!Ref ClientIp1ForPgAdmin,  ""]]
+  ClientIp2Given:
+    !Not [!Equals [!Ref ClientIp2ForPgAdmin,  ""]]
+
 
 Resources:
   EC2Instance:
@@ -130,6 +143,31 @@ Resources:
           ToPort: 8983
           IpProtocol: tcp
           CidrIp: !Ref WhitelistedIpAddress
+        - FromPort: 8000
+          ToPort: 8000
+          IpProtocol: tcp
+          CidrIp: !Ref WhitelistedIpAddress
+
+  PgAdminIngressRule1:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      FromPort: 8000
+      ToPort: 8000
+      IpProtocol: tcp
+      CidrIp: !Ref ClientIp1ForPgAdmin
+      GroupId: !GetAtt InstanceSecurityGroup.GroupId
+    Condition: ClientIp1Given
+
+  PgAdminIngressRule2:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      FromPort: 8000
+      ToPort: 8000
+      IpProtocol: tcp
+      CidrIp: !Ref ClientIp2ForPgAdmin
+      GroupId: !GetAtt InstanceSecurityGroup.GroupId
+    Condition: ClientIp2Given
+
 
   DatabaseIngressRule:
     Type: AWS::EC2::SecurityGroupIngress
@@ -162,6 +200,15 @@ Resources:
     Type: AWS::Route53::RecordSet
     Properties:
       Name: !Sub ${EnvironmentName}.dataportaali.com.
+      Type: A
+      TTL: 300
+      HostedZoneId: !Ref HostedZoneId
+      ResourceRecords: [ { "Fn::GetAtt" : [ "EC2Instance", "PublicIp" ] } ]
+
+  PgAdminDomainName:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Name: !Sub phppgadmin.${EnvironmentName}.dataportaali.com.
       Type: A
       TTL: 300
       HostedZoneId: !Ref HostedZoneId
