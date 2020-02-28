@@ -21,6 +21,10 @@ Parameters:
       - t2.micro
       - t2.small
       - t2.medium
+      - t3.micro
+      - t3.small
+      - t3.medium
+      - t3.large
     ConstraintDescription: "Must be one of the following EC2 instance types: t2.micro, t2.small, t2.medium"
   DatabaseSecurityGroup:
     Description: Security group of the RDS database
