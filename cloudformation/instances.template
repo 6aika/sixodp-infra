@@ -71,7 +71,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: !Ref InstanceType
-      ImageId: ami-c0cff0a6 # Ubuntu Server 16.04 LTS (HVM), SSD Volume Type
+      ImageId: ami-0aef57767f5404a3c # Ubuntu Server 20.04 LTS (HVM), SSD Volume Type
       KeyName: sixodp-omni
       IamInstanceProfile: !Ref InstanceProfile
       SecurityGroups:
@@ -94,13 +94,15 @@ Resources:
 
           apt-get update
           apt-get -y dist-upgrade
-          apt-get -y install libssl-dev libffi-dev python-dev python-pip git nfs-common
+          apt-get -y install libssl-dev libffi-dev python2-dev git nfs-common python2
+          curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
+          python2 get-pip.py
           pip install pip setuptools --upgrade
           pip install awscli ansible==2.8.6 markupsafe docker-py==1.9.0
 
           echo '${EFSFileSystem}.efs.${AWS::Region}.amazonaws.com:/ /mnt nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0' >>/etc/fstab
-          echo '${EFSFileSystem}.efs.${AWS::Region}.amazonaws.com:/mnt/var_lib_acme /var/lib/acme nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0' >>/etc/fstab
-          echo '${EFSFileSystem}.efs.${AWS::Region}.amazonaws.com:/mnt/opt_datacatalog_data_ckan /opt/datacatalog/data/ckan nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0' >>/etc/fstab
+          echo '${EFSFileSystem}.efs.${AWS::Region}.amazonaws.com:/var_lib_acme /var/lib/acme nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0' >>/etc/fstab
+          echo '${EFSFileSystem}.efs.${AWS::Region}.amazonaws.com:/opt_datacatalog_data_ckan /opt/datacatalog/data/ckan nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0' >>/etc/fstab
           mount /mnt
           mkdir -p /var/lib/acme /opt/datacatalog/data/ckan /mnt/var_lib_acme /mnt/opt_datacatalog_data_ckan
           mount /var/lib/acme
