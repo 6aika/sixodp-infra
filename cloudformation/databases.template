@@ -43,7 +43,7 @@ Resources:
       AllocatedStorage: 50
       Engine: postgres
       BackupRetentionPeriod: 7
-      DBInstanceClass: db.t2.small
+      DBInstanceClass: db.t3.small
       MultiAZ: false
       StorageType: gp2
       DBInstanceIdentifier: !Sub sixodp-${EnvironmentName}-ckan
@@ -59,7 +59,7 @@ Resources:
       AllocatedStorage: 50
       Engine: mysql
       BackupRetentionPeriod: 7
-      DBInstanceClass: db.t2.small
+      DBInstanceClass: db.t3.small
       MultiAZ: false
       StorageType: gp2
       DBInstanceIdentifier: !Sub sixodp-${EnvironmentName}-wordpress
