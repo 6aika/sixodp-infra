@@ -95,7 +95,7 @@ Resources:
           apt-get update
           apt-get -y dist-upgrade
           apt-get -y install libssl-dev libffi-dev python2-dev git nfs-common python2
-          curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
+          curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
           python2 get-pip.py
           pip install pip setuptools --upgrade
           pip install awscli ansible==2.8.6 markupsafe docker-py==1.9.0
