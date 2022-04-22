@@ -71,7 +71,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: !Ref InstanceType
-      ImageId: ami-0aef57767f5404a3c # Ubuntu Server 20.04 LTS (HVM), SSD Volume Type
+      ImageId: ami-0a8e758f5e873d1c1 # Ubuntu Server 20.04 LTS (HVM), SSD Volume Type
       KeyName: sixodp-omni
       IamInstanceProfile: !Ref InstanceProfile
       SecurityGroups:
@@ -243,6 +243,8 @@ Resources:
                 Resource:
                   - !Sub "arn:aws:s3:::sixodp-${EnvironmentName}-datasets"
                   - !Sub "arn:aws:s3:::sixodp-${EnvironmentName}-datasets/*"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
 
   InstanceProfile:
     Type: AWS::IAM::InstanceProfile
